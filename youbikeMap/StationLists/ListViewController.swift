@@ -13,29 +13,44 @@ import RxCocoa
 
 class ListViewController: UIViewController {
 
+    let reuseID = "ListCell"
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.register(ListViewCell.self, forCellReuseIdentifier: reuseID)
         return tableView
     }()
     
+    private let viewModel = ListViewViewModel()
+    let disposeBag: DisposeBag = .init()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        viewModel.didUpdateDataRelay
+            .subscribe(onNext: { [weak self] in self?.didUpdateData(data: $0) })
+            .disposed(by: disposeBag)
+        
+        loadTableView()
+        
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    private func loadTableView() {
+        view.addSubview(tableView)
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+        ])
     }
-    */
+    
+    
+    private func didUpdateData(data: [YouBikeStation]) {
+        //Do Something...
+    }
 
 }
 
@@ -51,7 +66,18 @@ extension ListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        return UITableViewCell()
+        let station = viewModel.stations[indexPath.row]
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: reuseID, for: indexPath) as? ListViewCell else { return UITableViewCell() }
+        cell.delegate = self
+        cell.setContent(with: station)
+        
+        return cell
+    }
+}
+
+extension ListViewController: ListViewCellDelegate {
+    func cell(_ cell: ListViewCell, buttonTouchUpInside button: UIButton, stationID: String?) {
+        
     }
     
     

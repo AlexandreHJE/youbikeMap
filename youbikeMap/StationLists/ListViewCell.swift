@@ -65,7 +65,10 @@ class ListViewCell: UITableViewCell {
         contentView.addSubview(favoriteButton)
         
         NSLayoutConstraint.activate([
-            
+            title.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10.0),
+            title.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            title.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            title.heightAnchor.constraint(equalToConstant: 20.0),
         ])
         
     }
@@ -80,4 +83,8 @@ class ListViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
+    func setContent(with station: YouBikeStation) {
+        title.text = station.sna
+    }
+    
 }

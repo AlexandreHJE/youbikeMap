@@ -45,7 +45,7 @@ struct ApiReturn: Codable {
     }
 }
 
-struct YouBikeStation: Codable {
+struct YouBikeStation: Codable, Hashable {
     var sno: String
     var sna: String
     var tot: String
@@ -60,4 +60,14 @@ struct YouBikeStation: Codable {
     var aren: String
     var bemp: String
     var act: String
+}
+
+extension YouBikeStation: Equatable {
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        return
+            lhs.sbi == rhs.sbi &&
+            lhs.mday == rhs.mday &&
+            lhs.bemp == rhs.bemp &&
+            lhs.act == rhs.act
+    }
 }
