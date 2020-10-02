@@ -46,10 +46,42 @@
             filePath = "youbikeMap/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "66"
-            endingLineNumber = "66"
-            landmarkName = "didUpdateData(data:)"
-            landmarkType = "7">
+            startingLineNumber = "67"
+            endingLineNumber = "67"
+            landmarkName = "ViewController"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "4C718982-A772-4009-9236-9AAF520643DD - 9285fb282fbe8ba3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "youbikeMap.ViewController.init(nibName: Swift.Optional&lt;Swift.String&gt;, bundle: Swift.Optional&lt;__C.NSBundle&gt;) -&gt; youbikeMap.ViewController"
+                  moduleName = "youbikeMap"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/alexhu/Desktop/youbikeMap/youbikeMap/ViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "99"
+                  endingLineNumber = "99"
+                  offsetFromSymbolStart = "404">
+               </Location>
+               <Location
+                  uuid = "4C718982-A772-4009-9236-9AAF520643DD - 8bbe4208ae903f10"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "youbikeMap.ViewController.init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;youbikeMap.ViewController&gt;"
+                  moduleName = "youbikeMap"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/alexhu/Desktop/youbikeMap/youbikeMap/ViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "99"
+                  endingLineNumber = "99"
+                  offsetFromSymbolStart = "345">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -62,10 +94,10 @@
             filePath = "youbikeMap/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "83"
-            endingLineNumber = "83"
-            landmarkName = "tableView(_:cellForRowAt:)"
-            landmarkType = "7">
+            startingLineNumber = "84"
+            endingLineNumber = "84"
+            landmarkName = "ViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -78,10 +110,42 @@
             filePath = "youbikeMap/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "78"
-            endingLineNumber = "78"
-            landmarkName = "tableView(_:numberOfRowsInSection:)"
-            landmarkType = "7">
+            startingLineNumber = "79"
+            endingLineNumber = "79"
+            landmarkName = "ViewController"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "36661E33-2E5F-48D3-A5F8-FEC1155B7348 - 9285fb282fbe8ba3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "youbikeMap.ViewController.init(nibName: Swift.Optional&lt;Swift.String&gt;, bundle: Swift.Optional&lt;__C.NSBundle&gt;) -&gt; youbikeMap.ViewController"
+                  moduleName = "youbikeMap"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/alexhu/Desktop/youbikeMap/youbikeMap/ViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "99"
+                  endingLineNumber = "99"
+                  offsetFromSymbolStart = "404">
+               </Location>
+               <Location
+                  uuid = "36661E33-2E5F-48D3-A5F8-FEC1155B7348 - 8bbe4208ae903f10"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "youbikeMap.ViewController.init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;youbikeMap.ViewController&gt;"
+                  moduleName = "youbikeMap"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/alexhu/Desktop/youbikeMap/youbikeMap/ViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "99"
+                  endingLineNumber = "99"
+                  offsetFromSymbolStart = "345">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -98,6 +162,134 @@
             endingLineNumber = "18"
             landmarkName = "stations"
             landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4D668EC5-3293-4505-8CCC-036407EDF40A"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "youbikeMap/Map/MapViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "63"
+            endingLineNumber = "63"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "4D668EC5-3293-4505-8CCC-036407EDF40A - 4862eddebe91d7fc"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "youbikeMap.MapViewController.viewDidLoad() -&gt; ()"
+                  moduleName = "youbikeMap"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/alexhu/Desktop/youbikeMap/youbikeMap/Map/MapViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "63"
+                  endingLineNumber = "63"
+                  offsetFromSymbolStart = "295">
+               </Location>
+               <Location
+                  uuid = "4D668EC5-3293-4505-8CCC-036407EDF40A - fe06be59a0c0f3c1"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Array&lt;youbikeMap.YouBikeStation&gt;) -&gt; () in youbikeMap.MapViewController.viewDidLoad() -&gt; ()"
+                  moduleName = "youbikeMap"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/alexhu/Desktop/youbikeMap/youbikeMap/Map/MapViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "63"
+                  endingLineNumber = "63"
+                  offsetFromSymbolStart = "88">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "98E4E86E-B23A-4B0C-8CC3-880A4514AB76"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "youbikeMap/ViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "180"
+            endingLineNumber = "180"
+            landmarkName = "makePins()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9D9A630A-8677-4531-9759-C508516D14E1"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "youbikeMap/ViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "178"
+            endingLineNumber = "178"
+            landmarkName = "makePins()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "9D9A630A-8677-4531-9759-C508516D14E1 - af623156a5b4b8ce"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "youbikeMap.ViewController.(makePins in _7C4307972012059274C69BD2E6DB3332)() -&gt; ()"
+                  moduleName = "youbikeMap"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/alexhu/Desktop/youbikeMap/youbikeMap/ViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "186"
+                  endingLineNumber = "186"
+                  offsetFromSymbolStart = "134">
+               </Location>
+               <Location
+                  uuid = "9D9A630A-8677-4531-9759-C508516D14E1 - 1b04012e6b81669a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (youbikeMap.YouBikeStation) -&gt; __C.MKPointAnnotation in youbikeMap.ViewController.(makePins in _7C4307972012059274C69BD2E6DB3332)() -&gt; ()"
+                  moduleName = "youbikeMap"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/alexhu/Desktop/youbikeMap/youbikeMap/ViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "186"
+                  endingLineNumber = "186"
+                  offsetFromSymbolStart = "19">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "968205BC-C557-4F5F-B080-D57C6E1857DB"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "youbikeMap/ViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "185"
+            endingLineNumber = "185"
+            landmarkName = "didDataUpdate(data:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

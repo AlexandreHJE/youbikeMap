@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MapKit
 
 struct Response: Decodable {
     
@@ -69,5 +70,14 @@ extension YouBikeStation: Equatable {
             lhs.mday == rhs.mday &&
             lhs.bemp == rhs.bemp &&
             lhs.act == rhs.act
+    }
+    
+    func setStationAnnotation() -> MKPointAnnotation {
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = CLLocationCoordinate2D(latitude: Double(lat) ?? 0.0, longitude: Double(lng) ?? 0.0)
+        annotation.title = sna
+        annotation.subtitle = ar
+        
+        return annotation
     }
 }
