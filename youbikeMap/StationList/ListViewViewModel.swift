@@ -20,7 +20,7 @@ class ListViewViewModel {
     }
     
     init() {
-        NotificationCenter.default.addObserver(self, selector: #selector(processingDataToArray(_:)), name: NSNotification.Name(rawValue: "Get Data"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(processingDataToArray(_:)), name: NSNotification.Name(rawValue: "GetData"), object: nil)
     }
     
     @objc

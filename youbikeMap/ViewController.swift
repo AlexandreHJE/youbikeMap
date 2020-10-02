@@ -37,7 +37,18 @@ class ViewController: UIViewController {
             .disposed(by: disposeBag)
         
         loadTableView()
-        
+//        bindTableView()
+    }
+    
+    private func bindTableView() {
+        let station = Observable.just(viewModel.stations)
+        station.bind(to: tableView.rx.items(cellIdentifier: reuseID, cellType: ListViewCell.self))
+        { (row, element, cell) in
+            cell.setContent(with: element)
+        }.disposed(by: disposeBag)
+        tableView.rx.modelSelected(String.self).subscribe(onNext: {
+            print("tap index: \($0)")
+            }).disposed(by: disposeBag)
     }
     
     private func loadTableView() {
@@ -58,22 +69,22 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: UITableViewDelegate {
-    
+
 }
 
 extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
+
         return viewModel.stations.count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
+
         let station = viewModel.stations[indexPath.row]
         guard let cell = tableView.dequeueReusableCell(withIdentifier: reuseID, for: indexPath) as? ListViewCell else { return UITableViewCell() }
         cell.delegate = self
         cell.setContent(with: station)
-        
+
         return cell
     }
 }

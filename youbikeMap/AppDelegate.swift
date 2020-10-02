@@ -43,7 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func getData() {
         DataManager.shared.getYoubikeData()
             .subscribe(onNext: { (stations) in
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "Get Data"), object: self, userInfo: ["stations": stations])
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "GetData"), object: self, userInfo: ["stations": stations])
                 print("getData \(self.date2String(Date(), dateFormat: "yyyyMMdd HH:mm:ss"))")
                 
             })
