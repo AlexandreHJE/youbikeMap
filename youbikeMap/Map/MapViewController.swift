@@ -35,13 +35,14 @@ class MapViewController: UIViewController {
     
     lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
+        searchBar.translatesAutoresizingMaskIntoConstraints = false
         
         return searchBar
     }()
     
     lazy var stationMap: MKMapView = {
         let map = MKMapView()
-        
+        map.translatesAutoresizingMaskIntoConstraints = false
         
         return map
     }()
@@ -54,7 +55,18 @@ class MapViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-
+    
+    private func setUIComponents() {
+        NSLayoutConstraint.activate([
+            searchBar.topAnchor.constraint(equalTo: view.topAnchor),
+            searchBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            searchBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            stationMap.topAnchor.constraint(equalTo: searchBar.bottomAnchor),
+            stationMap.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            stationMap.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            stationMap.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+        ])
+    }
     /*
     // MARK: - Navigation
 
