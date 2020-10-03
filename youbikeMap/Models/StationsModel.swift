@@ -82,7 +82,8 @@ extension YouBikeStation: Equatable {
                             剩餘車位數量：\(bemp)
                             最後更新時間：\(mday)
                             """
-    
+        annotation.setValue(sno, forUndefinedKey: "stationID")
+        
         return annotation
     }
 }

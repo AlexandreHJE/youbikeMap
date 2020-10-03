@@ -65,7 +65,6 @@ class MapViewController: UIViewController {
     }
     
     private func makePins(){
-        annotations = []
         viewModel.stations
             .asDriver(onErrorJustReturn: [])
             .drive(stationMap.rx.annotations)
@@ -101,6 +100,43 @@ class MapViewController: UIViewController {
         stationMap.setRegion(coordinateRegion, animated: true)
     }
 
+    private func popMessage(_ station: YouBikeStation) {
+           let alertController = UIAlertController(title: "請選擇欲操作的行為", message: "站點：\(station.sna)", preferredStyle: .alert)
+           
+           
+           var favoriteAction = "加入最愛"
+           
+           if let array = UserDefaults.standard.array(forKey: "favoriteIDs") as? [String] {
+               if Set([station.sno]).isSubset(of: Set(array)) {
+                   favoriteAction = "移除最愛"
+               }
+           }
+           
+           let addFavorite = UIAlertAction(title: favoriteAction, style: .default, handler: { _ in self.addToFavorite(station.sno)})
+           
+           let cancel = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+        
+           alertController.addAction(addFavorite)
+           alertController.addAction(cancel)
+        
+           present(alertController, animated: true, completion: nil)
+       }
+    
+       func addToFavorite(_ stationID: String) {
+           if var array = UserDefaults.standard.array(forKey: "favoriteIDs") as? [String] {
+               var favSet = Set(array)
+               if Set([stationID]).isSubset(of: favSet) {
+                   favSet.remove(stationID)
+                   array = Array(favSet)
+               } else {
+                   array.append(stationID)
+               }
+               UserDefaults.standard.set(array, forKey: "favoriteIDs")
+           } else {
+               UserDefaults.standard.set([stationID], forKey: "favoriteIDs")
+           }
+       }
+    
 }
 
 extension MapViewController: MKMapViewDelegate {
@@ -125,6 +161,7 @@ extension MapViewController: MKMapViewDelegate {
             subtitleLabel.numberOfLines = 0
             annotationView?.detailCalloutAccessoryView = subtitleLabel
             annotationView?.calloutOffset = CGPoint(x: -5, y: 5)
+        
             
             let rightButton = UIButton(type: .detailDisclosure)
             rightButton.addTarget(self, action: #selector(didClickDetailDisclosure(_:)), for: .touchUpInside)
@@ -137,6 +174,7 @@ extension MapViewController: MKMapViewDelegate {
     
     @objc
     func didClickDetailDisclosure(_ button: UIButton) {
-        print("tap")
+//        popMessage(button.superview?.value(forKey: "stationID") as! YouBikeStation)
+//        print(button.superview?.value(forKey: "stationID") as! YouBikeStation)
     }
 }
