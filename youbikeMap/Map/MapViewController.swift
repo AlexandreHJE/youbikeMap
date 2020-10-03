@@ -9,6 +9,7 @@
 import UIKit
 import MapKit
 import RxSwift
+import RxMKMapView
 
 class MapViewController: UIViewController {
 
@@ -16,7 +17,8 @@ class MapViewController: UIViewController {
     var selectedAnnotation: MKAnnotation?
     var youBikeData = [String: YouBikeStation]()
     var filteredData = [String: YouBikeStation]()
-    private let viewModel = ListViewViewModel()
+    private let viewModel = MapViewViewModel()
+//    private let viewModel = ListViewViewModel()
     private let disposeBag: DisposeBag = .init()
     
     let districtList = [
@@ -52,19 +54,29 @@ class MapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         setUIComponents()
         //set initial location in Taipei 101
         let initialLocation = CLLocation(latitude: 25.0339639, longitude: 121.5622835)
-        
+        viewModel.fetchStations()
         centerMapOnLocation(location: initialLocation)
-        
-        viewModel.didUpdateDataRelay
-            .subscribe(onNext: { [weak self] in self?.didDataUpdate(data: $0) })
-        .disposed(by: disposeBag)
-        
+        makePins()
     }
     
+    private func makePins(){
+        annotations = []
+        viewModel.stations
+            .asDriver(onErrorJustReturn: [])
+            .drive(stationMap.rx.annotations)
+            .disposed(by: disposeBag)
+
+        stationMap.rx.willStartLoadingMap
+            .asDriver()
+            .drive(onNext: {
+            print("map started loading")
+            })
+            .disposed(by: disposeBag)
+    }
     
     private func setUIComponents() {
         
@@ -87,25 +99,6 @@ class MapViewController: UIViewController {
                                                   latitudinalMeters: regionRad, longitudinalMeters: regionRad)
         stationMap.setRegion(coordinateRegion, animated: true)
     }
-    
-    private func makePins(){
-        annotations = []
-        for i in 0..<viewModel.stations.count {
-            let annotation = MKPointAnnotation()
-            annotation.coordinate = CLLocationCoordinate2D(latitude: ((viewModel.stations[i].lat) as NSString).doubleValue, longitude: ((viewModel.stations[i].lng) as NSString).doubleValue)
-            annotation.title = viewModel.stations[i].sna
-            annotation.subtitle = viewModel.stations[i].ar
-            annotations.append(annotation)
-        }
-        //寫不出來map...
-        //annotations = (viewModel.stations).map({$0.})
-        stationMap.addAnnotations(annotations)
-    }
-    
-    private func didDataUpdate(data: [YouBikeStation]) {
-        stationMap.removeAnnotations(annotations)
-        makePins()
-    }
     /*
     // MARK: - Navigation
 
@@ -116,4 +109,8 @@ class MapViewController: UIViewController {
     }
     */
 
+}
+
+extension MapViewController: MKMapViewDelegate {
+    
 }

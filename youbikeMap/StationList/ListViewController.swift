@@ -14,39 +14,39 @@ import RxCocoa
 class ListViewController: UIViewController {
 
     let reuseID = "ListCell"
-        lazy var tableView: UITableView = {
-            let tableView = UITableView(frame: .zero)
-            tableView.translatesAutoresizingMaskIntoConstraints = false
-            tableView.delegate = self
-            tableView.dataSource = self
-            tableView.register(ListViewCell.self, forCellReuseIdentifier: reuseID)
-            return tableView
-        }()
+    lazy var tableView: UITableView = {
+        let tableView = UITableView(frame: .zero)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.register(ListViewCell.self, forCellReuseIdentifier: reuseID)
+        return tableView
+    }()
+    
+    private let viewModel = ListViewViewModel()
+    let disposeBag: DisposeBag = .init()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
-        private let viewModel = ListViewViewModel()
-        let disposeBag: DisposeBag = .init()
+        loadTableView()
+        bindTableView()
         
-        override func viewDidLoad() {
-            super.viewDidLoad()
-            
-            viewModel.didUpdateDataRelay
-                .subscribe(onNext: { [weak self] in self?.didUpdateData(data: $0) })
-                .disposed(by: disposeBag)
-            
-            loadTableView()
-    //        bindTableView()
-        }
+        viewModel.fetchStations()
+    }
         
-        private func bindTableView() {
-            let station = Observable.just(viewModel.stations)
-            station.bind(to: tableView.rx.items(cellIdentifier: reuseID, cellType: ListViewCell.self))
-            { (row, element, cell) in
+    private func bindTableView() {
+        viewModel.stations
+            .bind(to: tableView.rx.items(cellIdentifier: reuseID, cellType: ListViewCell.self)) { (row, element, cell) in
                 cell.setContent(with: element)
-            }.disposed(by: disposeBag)
-            tableView.rx.modelSelected(String.self).subscribe(onNext: {
-                print("tap index: \($0)")
-                }).disposed(by: disposeBag)
         }
+        .disposed(by: disposeBag)
+        
+        tableView.rx
+            .modelSelected(YouBikeStation.self)
+            .subscribe(onNext: {
+                print("tap index: \($0)")
+            })
+            .disposed(by: disposeBag)
+    }
         
         private func loadTableView() {
             view.addSubview(tableView)
@@ -61,28 +61,6 @@ class ListViewController: UIViewController {
         
         private func didUpdateData(data: [YouBikeStation]) {
             tableView.reloadData()
-        }
-
-    }
-
-    extension ListViewController: UITableViewDelegate {
-
-    }
-
-    extension ListViewController: UITableViewDataSource {
-        func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
-            return viewModel.stations.count
-        }
-
-        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
-            let station = viewModel.stations[indexPath.row]
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: reuseID, for: indexPath) as? ListViewCell else { return UITableViewCell() }
-            cell.delegate = self
-            cell.setContent(with: station)
-
-            return cell
         }
     }
 

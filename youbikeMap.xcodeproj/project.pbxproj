@@ -10,6 +10,9 @@
 		4411715C659AC5C6D3A6D12E /* Pods_youbikeMap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 224CEB23124825B2B56527D5 /* Pods_youbikeMap.framework */; };
 		A274F4C82527045900D895CC /* StationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A274F4C72527045900D895CC /* StationManager.swift */; };
 		A274F4CB2527056D00D895CC /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A274F4CA2527056D00D895CC /* MapViewController.swift */; };
+		A274F4F3252772CD00D895CC /* MapViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A274F4F2252772CD00D895CC /* MapViewViewModel.swift */; };
+		A274F4F725280C5100D895CC /* MapAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A274F4F625280C5100D895CC /* MapAnnotation.swift */; };
+		A274F4F925280F9D00D895CC /* MapAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A274F4F825280F9D00D895CC /* MapAnnotationView.swift */; };
 		A2CE30DF252592F200B364B1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CE30DE252592F200B364B1 /* AppDelegate.swift */; };
 		A2CE30E1252592F200B364B1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CE30E0252592F200B364B1 /* SceneDelegate.swift */; };
 		A2CE30E3252592F200B364B1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CE30E2252592F200B364B1 /* ViewController.swift */; };
@@ -30,6 +33,9 @@
 		5E02C9535DD8A69F800FAF18 /* Pods-youbikeMap.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-youbikeMap.release.xcconfig"; path = "Target Support Files/Pods-youbikeMap/Pods-youbikeMap.release.xcconfig"; sourceTree = "<group>"; };
 		A274F4C72527045900D895CC /* StationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationManager.swift; sourceTree = "<group>"; };
 		A274F4CA2527056D00D895CC /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		A274F4F2252772CD00D895CC /* MapViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewViewModel.swift; sourceTree = "<group>"; };
+		A274F4F625280C5100D895CC /* MapAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapAnnotation.swift; sourceTree = "<group>"; };
+		A274F4F825280F9D00D895CC /* MapAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapAnnotationView.swift; sourceTree = "<group>"; };
 		A2CE30DB252592F200B364B1 /* youbikeMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = youbikeMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2CE30DE252592F200B364B1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A2CE30E0252592F200B364B1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -77,6 +83,9 @@
 			isa = PBXGroup;
 			children = (
 				A274F4CA2527056D00D895CC /* MapViewController.swift */,
+				A274F4F825280F9D00D895CC /* MapAnnotationView.swift */,
+				A274F4F625280C5100D895CC /* MapAnnotation.swift */,
+				A274F4F2252772CD00D895CC /* MapViewViewModel.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -276,6 +285,9 @@
 				A2CE30F925259E3000B364B1 /* MyFavoriteModel.swift in Sources */,
 				A2CE30E3252592F200B364B1 /* ViewController.swift in Sources */,
 				A2CE30FF2525E3EE00B364B1 /* ListViewController.swift in Sources */,
+				A274F4F925280F9D00D895CC /* MapAnnotationView.swift in Sources */,
+				A274F4F3252772CD00D895CC /* MapViewViewModel.swift in Sources */,
+				A274F4F725280C5100D895CC /* MapAnnotation.swift in Sources */,
 				A2CE30DF252592F200B364B1 /* AppDelegate.swift in Sources */,
 				A2CE31012525E53800B364B1 /* ListViewViewModel.swift in Sources */,
 				A2CE30F725259A1900B364B1 /* StationsModel.swift in Sources */,
@@ -425,7 +437,9 @@
 			baseConfigurationReference = 3C8F9AA4EEFE8180E5183CD8 /* Pods-youbikeMap.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = youbikeMap/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -433,6 +447,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = AlexHJE.youbikeMap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -443,7 +458,9 @@
 			baseConfigurationReference = 5E02C9535DD8A69F800FAF18 /* Pods-youbikeMap.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = youbikeMap/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -451,6 +468,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = AlexHJE.youbikeMap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

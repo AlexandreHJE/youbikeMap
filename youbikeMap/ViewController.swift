@@ -144,10 +144,6 @@ class ViewController: UIViewController {
         
         centerMapOnLocation(location: initialLocation)
         
-        viewModel.didUpdateDataRelay
-            .subscribe(onNext: { [weak self] in self?.didDataUpdate(data: $0) })
-        .disposed(by: disposeBag)
-        
     }
     
     
@@ -173,10 +169,32 @@ class ViewController: UIViewController {
         stationMap.setRegion(coordinateRegion, animated: true)
     }
     
+//    private func bindTableView() {
+//            viewModel.stations
+//                .bind(to: tableView.rx.items(cellIdentifier: reuseID, cellType: ListViewCell.self)) { (row, element, cell) in
+//                    cell.setContent(with: element)
+//            }
+//            .disposed(by: disposeBag)
+//
+//            tableView.rx
+//                .modelSelected(YouBikeStation.self)
+//                .subscribe(onNext: {
+//                    print("tap index: \($0)")
+//                })
+//                .disposed(by: disposeBag)
+//
+//    //        let mapView = MKMapView()
+//    //        viewModel.stations
+//    //            .bind(to: mapView.rx.)
+//        }
+    
     private func makePins(){
         annotations = []
-        annotations = (viewModel.stations).map({ $0.setStationAnnotation() })
-        //annotations = (viewModel.stations).map({$0.})
+    
+//        viewModel.stations.map({$0 as [MKAnnotation] })
+//            .asDriver(onErrorJustReturn: [])
+//            .drive(stationMap.rx.annotations(viewModel.stations))
+//        annotations = (viewModel.stations).map({ $0.setStationAnnotation() })
         stationMap.addAnnotations(annotations)
     }
     

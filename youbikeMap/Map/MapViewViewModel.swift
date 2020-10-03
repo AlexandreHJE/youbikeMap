@@ -1,18 +1,20 @@
 //
-//  ListViewViewModel.swift
+//  MapViewViewModel.swift
 //  youbikeMap
 //
-//  Created by Alex Hu on 2020/10/1.
+//  Created by Alex Hu on 2020/10/2.
 //  Copyright © 2020 Alex Hu. All rights reserved.
 //
 
 import Foundation
+import MapKit
 import RxRelay
 import RxSwift
 
-class ListViewViewModel {
+class MapViewViewModel {
     
-    let stations: PublishRelay<[YouBikeStation]> = .init() //Observabel, Subscriber
+    let stations: PublishRelay<[MKPointAnnotation]> = .init()
+    //Observabel, Subscriber
     
     private let bag = DisposeBag()
     
@@ -23,18 +25,16 @@ class ListViewViewModel {
             .flatMap { (_) -> Observable<[String: YouBikeStation]> in
                 return DataManager.shared.getYoubikeData()
         }
-        .map({ (stations) -> [YouBikeStation] in
-            var temps = [YouBikeStation]()
+        .map({ (stations) -> [MKPointAnnotation] in
+            var temps = [MKPointAnnotation]()
             for k in stations.keys {
-                temps.append(stations[k]!)
-            }
-            temps.sort { (lhs, rhs) -> Bool in
-                return lhs.sno > rhs.sno
+                temps.append((stations[k]?.setStationAnnotation())!)
+                
             }
             return temps
         })
             .subscribe(onNext: { (stations) in
-                print(stations.first)
+                print("stations: \(stations.first)")
                 self.stations.accept(stations)
             })
             .disposed(by: bag)
