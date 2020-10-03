@@ -72,12 +72,17 @@ extension YouBikeStation: Equatable {
             lhs.act == rhs.act
     }
     
-    func setStationAnnotation() -> MKPointAnnotation {
+    func setStationAnnotation() -> MKAnnotation {
         let annotation = MKPointAnnotation()
         annotation.coordinate = CLLocationCoordinate2D(latitude: Double(lat) ?? 0.0, longitude: Double(lng) ?? 0.0)
-        annotation.title = sna
-        annotation.subtitle = ar
         
+        annotation.title = "站名：\(sna)"
+        annotation.subtitle = """
+                            目前腳踏車數量：\(sbi)
+                            剩餘車位數量：\(bemp)
+                            最後更新時間：\(mday)
+                            """
+    
         return annotation
     }
 }

@@ -59,6 +59,7 @@ class MapViewController: UIViewController {
         //set initial location in Taipei 101
         let initialLocation = CLLocation(latitude: 25.0339639, longitude: 121.5622835)
         viewModel.fetchStations()
+        stationMap.delegate = self
         centerMapOnLocation(location: initialLocation)
         makePins()
     }
@@ -99,18 +100,43 @@ class MapViewController: UIViewController {
                                                   latitudinalMeters: regionRad, longitudinalMeters: regionRad)
         stationMap.setRegion(coordinateRegion, animated: true)
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
 
 extension MapViewController: MKMapViewDelegate {
-    
+//    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+//        let reuseIdentifier = "MapPinAnnotationView"
+//        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseIdentifier)
+//
+//        annotationView = MapPinAnnotationView(annotation: annotation, reuseIdentifier: reuseIdentifier)
+//        annotationView?.canShowCallout = true
+//        annotationView?.detailCalloutAccessoryView
+//        return annotationView
+//
+//    }
+
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        
+        let reuseIdentifier = "MapPinAnnotationView"
+
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseIdentifier)
+
+        if annotationView == nil {
+
+            annotationView = MapPinAnnotationView(annotation: annotation, reuseIdentifier: reuseIdentifier)
+
+            annotationView?.canShowCallout = true
+            
+            let subtitleText = annotation.subtitle ?? "修復中..."
+
+            let subtitleLabel = UILabel()
+            subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
+            subtitleLabel.text = subtitleText
+            subtitleLabel.numberOfLines = 0
+            annotationView?.detailCalloutAccessoryView = subtitleLabel
+            annotationView?.calloutOffset = CGPoint(x: -5, y: 5)
+        }
+
+        return annotationView
+    }
 }

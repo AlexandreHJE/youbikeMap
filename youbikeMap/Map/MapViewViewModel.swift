@@ -13,7 +13,7 @@ import RxSwift
 
 class MapViewViewModel {
     
-    let stations: PublishRelay<[MKPointAnnotation]> = .init()
+    let stations: PublishRelay<[MKAnnotation]> = .init()
     //Observabel, Subscriber
     
     private let bag = DisposeBag()
@@ -25,8 +25,8 @@ class MapViewViewModel {
             .flatMap { (_) -> Observable<[String: YouBikeStation]> in
                 return DataManager.shared.getYoubikeData()
         }
-        .map({ (stations) -> [MKPointAnnotation] in
-            var temps = [MKPointAnnotation]()
+        .map({ (stations) -> [MKAnnotation] in
+            var temps = [MKAnnotation]()
             for k in stations.keys {
                 temps.append((stations[k]?.setStationAnnotation())!)
                 
@@ -34,7 +34,6 @@ class MapViewViewModel {
             return temps
         })
             .subscribe(onNext: { (stations) in
-                print("stations: \(stations.first)")
                 self.stations.accept(stations)
             })
             .disposed(by: bag)
