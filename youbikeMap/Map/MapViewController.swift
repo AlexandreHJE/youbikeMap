@@ -104,16 +104,6 @@ class MapViewController: UIViewController {
 }
 
 extension MapViewController: MKMapViewDelegate {
-//    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-//        let reuseIdentifier = "MapPinAnnotationView"
-//        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseIdentifier)
-//
-//        annotationView = MapPinAnnotationView(annotation: annotation, reuseIdentifier: reuseIdentifier)
-//        annotationView?.canShowCallout = true
-//        annotationView?.detailCalloutAccessoryView
-//        return annotationView
-//
-//    }
 
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
