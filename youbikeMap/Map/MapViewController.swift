@@ -125,8 +125,18 @@ extension MapViewController: MKMapViewDelegate {
             subtitleLabel.numberOfLines = 0
             annotationView?.detailCalloutAccessoryView = subtitleLabel
             annotationView?.calloutOffset = CGPoint(x: -5, y: 5)
+            
+            let rightButton = UIButton(type: .detailDisclosure)
+            rightButton.addTarget(self, action: #selector(didClickDetailDisclosure(_:)), for: .touchUpInside)
+            
+            annotationView?.rightCalloutAccessoryView = rightButton
         }
 
         return annotationView
+    }
+    
+    @objc
+    func didClickDetailDisclosure(_ button: UIButton) {
+        print("tap")
     }
 }

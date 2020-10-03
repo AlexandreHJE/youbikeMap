@@ -11,15 +11,8 @@ import MapKit
 
 class MapPinAnnotationView: MKPinAnnotationView {
     
-    lazy var actionButton: UIButton = {
-        let button = UIButton(type: .detailDisclosure)
-        
-        return button
-    }()
-    
-    
     override func draw(_ rect: CGRect) {
         super.draw(rect)
-        rightCalloutAccessoryView = actionButton
+
     }
 }
