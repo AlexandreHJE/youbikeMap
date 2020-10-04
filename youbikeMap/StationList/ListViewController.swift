@@ -21,34 +21,26 @@ class ListViewController: UIViewController {
         return tableView
     }()
     
-    
+    lazy var searchBar: UISearchBar = {
+        let searchBar = UISearchBar()
+        searchBar.translatesAutoresizingMaskIntoConstraints = false
+        
+        return searchBar
+    }()
     
     private let viewModel = ListViewViewModel()
     let disposeBag: DisposeBag = .init()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        loadFavorites()
-        loadTableView()
+    
+        loadViews()
         bindTableView()
         
         viewModel.fetchStations()
         
     }
-    
-    private func loadFavorites() {
-        UserDefaults.standard.rx
-        .observe([String].self, "favoriteIDs")
-        .subscribe(onNext: { (value) in
-            if let value = value {
-                self.tableView.reloadData()
-            }
-        })
-        .disposed(by: disposeBag)
         
-    }
-    
     private func bindTableView() {
         viewModel.stations
             .bind(to: tableView.rx.items(cellIdentifier: reuseID, cellType: ListViewCell.self)) { (row, element, cell) in
@@ -65,10 +57,14 @@ class ListViewController: UIViewController {
             .disposed(by: disposeBag)
     }
         
-    private func loadTableView() {
+    private func loadViews() {
+        view.addSubview(searchBar)
         view.addSubview(tableView)
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            searchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            searchBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            searchBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            tableView.topAnchor.constraint(equalTo: searchBar.safeAreaLayoutGuide.bottomAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),

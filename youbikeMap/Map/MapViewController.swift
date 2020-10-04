@@ -103,9 +103,9 @@ class MapViewController: UIViewController {
         view.addSubview(refreshButton)
         
         NSLayoutConstraint.activate([
-            searchBar.topAnchor.constraint(equalTo: view.topAnchor),
-            searchBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            searchBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            searchBar.safeAreaLayoutGuide.topAnchor.constraint(equalTo: view.topAnchor),
+            searchBar.safeAreaLayoutGuide.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            searchBar.safeAreaLayoutGuide.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             stationMap.topAnchor.constraint(equalTo: searchBar.bottomAnchor),
             stationMap.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             stationMap.leadingAnchor.constraint(equalTo: view.leadingAnchor),
