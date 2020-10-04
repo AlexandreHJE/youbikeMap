@@ -14,16 +14,6 @@ import RxSwift
 
 class MapViewViewModel {
     
-    struct Station {
-        let ID: String
-        let coordinate: CLLocationCoordinate2D
-        var isFavorite: Bool = false
-        let name: String // -> sna
-        let address: String // -> ar
-        let emptySlot: Int // -> bemp
-        let area: String // -> sarea
-    }
-    
     let stations: BehaviorRelay<[YouBikeStation]> = .init(value: [])
     //Observabel, Subscriber
     

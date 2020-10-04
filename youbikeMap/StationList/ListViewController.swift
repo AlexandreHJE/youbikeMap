@@ -13,6 +13,23 @@ import RxCocoa
 
 class ListViewController: UIViewController {
 
+    let districtList = [
+        "一般",
+        "最愛",
+        "中正區",
+        "大同區",
+        "中山區",
+        "松山區",
+        "大安區",
+        "萬華區",
+        "信義區",
+        "士林區",
+        "北投區",
+        "內湖區",
+        "南港區",
+        "文山區"
+    ]
+    
     let reuseID = "ListCell"
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero)
@@ -24,8 +41,20 @@ class ListViewController: UIViewController {
     lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.translatesAutoresizingMaskIntoConstraints = false
+        searchBar.delegate = self
         
         return searchBar
+    }()
+    
+    lazy var picker: UIPickerView = {
+        let picker = UIPickerView()
+        picker.isHidden = true
+        picker.translatesAutoresizingMaskIntoConstraints = false
+        picker.delegate = self
+        picker.dataSource = self
+        picker.backgroundColor = .gray
+        
+        return picker
     }()
     
     private let viewModel = ListViewViewModel()
@@ -38,6 +67,11 @@ class ListViewController: UIViewController {
         bindTableView()
         
         viewModel.fetchStations()
+                
+    }
+        
+    override func viewWillAppear(_ animated: Bool) {
+            super.viewWillAppear(animated)
         
     }
         
@@ -48,6 +82,20 @@ class ListViewController: UIViewController {
         }
         .disposed(by: disposeBag)
         
+        searchBar.rx.text
+            .orEmpty
+            .distinctUntilChanged()
+            .subscribe(onNext: { (text) in
+                print("searchBar.rx.text.onNext: \(String(describing: text))")
+            })
+            .disposed(by: self.disposeBag)
+        
+        searchBar.rx.searchButtonClicked
+            .subscribe(onNext: {() in
+                print("searchBar.rx.searchButtonClicked.onNext: text: \(String(describing: self.searchBar.text))")
+            })
+            .disposed(by: self.disposeBag)
+        
         tableView.rx
             .modelSelected(ListViewViewModel.Station.self)
             .subscribe(onNext: {
@@ -55,11 +103,14 @@ class ListViewController: UIViewController {
                 self.popMessage($0)
             })
             .disposed(by: disposeBag)
+        
+        
     }
         
     private func loadViews() {
         view.addSubview(searchBar)
         view.addSubview(tableView)
+        view.addSubview(picker)
         NSLayoutConstraint.activate([
             searchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             searchBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
@@ -68,6 +119,10 @@ class ListViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            picker.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -100),
+            picker.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            picker.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            picker.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
         ])
     }
     
@@ -86,7 +141,7 @@ class ListViewController: UIViewController {
         let addFavorite = UIAlertAction(title: favoriteAction, style: .default, handler: { _ in self.addToFavorite(station.ID)})
         
         let cancel = UIAlertAction(title: "取消", style: .cancel, handler: nil)
-        let seeMap = UIAlertAction(title: "前往地圖看位置", style: .default, handler: nil)
+        let seeMap = UIAlertAction(title: "前往地圖查看位置", style: .default, handler: nil)
         alertController.addAction(addFavorite)
         alertController.addAction(cancel)
         alertController.addAction(seeMap)
@@ -108,4 +163,45 @@ class ListViewController: UIViewController {
         }
     }
     
+    
+    
+}
+
+extension ListViewController: UISearchBarDelegate {
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        print("aaa")
+        picker.isHidden = false
+        
+    }
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        print("Search Icon tapped")
+        picker.isHidden = !picker.isHidden
+    }
+    
+}
+
+extension ListViewController: UIPickerViewDelegate {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        self.view.endEditing(true)
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return districtList[row]
+    }
+}
+
+extension ListViewController: UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return districtList.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+//        searchBar.text = ""
+        searchBar.searchTextField.text = districtList[row]
+    }
 }

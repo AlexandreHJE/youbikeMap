@@ -13,6 +13,6 @@ class MapPinAnnotationView: MKPinAnnotationView {
     
     override func draw(_ rect: CGRect) {
         super.draw(rect)
-
+        
     }
 }

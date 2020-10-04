@@ -20,6 +20,7 @@ class ListViewViewModel {
         let name: String // -> sna
         let address: String // -> ar
         let emptySlot: Int // -> bemp
+        let avaliableBikes: Int // -> sbi
         let area: String // -> sarea
     }
     
@@ -68,6 +69,7 @@ extension YouBikeStation {
                                          name: sna,
                                          address: ar,
                                          emptySlot: Int(bemp) ?? 0,
+                                         avaliableBikes: Int(sbi) ?? 0,
                                          area: sarea)
     }
 }

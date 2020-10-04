@@ -94,6 +94,9 @@ class MapViewController: UIViewController {
             print("map started loading")
             })
             .disposed(by: disposeBag)
+        
+        
+        
     }
     
     private func setUIComponents() {
@@ -161,13 +164,13 @@ class MapViewController: UIViewController {
 }
 
 extension MapViewController: MKMapViewDelegate {
-
+    
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
         let reuseIdentifier = "MapPinAnnotationView"
 
         var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseIdentifier)
-
+        
         if annotationView == nil {
 
             annotationView = MapPinAnnotationView(annotation: annotation, reuseIdentifier: reuseIdentifier)
@@ -183,9 +186,10 @@ extension MapViewController: MKMapViewDelegate {
             annotationView?.detailCalloutAccessoryView = subtitleLabel
             annotationView?.calloutOffset = CGPoint(x: -5, y: 5)
             annotationView?.rightCalloutAccessoryView = UIButton(type: .infoLight)
+            
         }
 
-        return annotationView
+        return annotationView as? MKPinAnnotationView
     }
     
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
@@ -195,6 +199,17 @@ extension MapViewController: MKMapViewDelegate {
         
         popMessage(station)
     }
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        guard let view = view as? MKPinAnnotationView else { return }
+        view.pinTintColor = .green
+    }
+    
+    func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
+        guard let view = view as? MKPinAnnotationView else { return }
+        view.pinTintColor = .red
+    }
+    
 }
 
 

@@ -69,18 +69,18 @@ class ListViewCell: UITableViewCell {
         NSLayoutConstraint.activate([
             favoriteStatus.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
 //            favoriteButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10.0),
-            favoriteStatus.widthAnchor.constraint(equalToConstant: contentView.frame.width/4.0),
+            favoriteStatus.widthAnchor.constraint(equalToConstant: contentView.frame.width/5.0),
             favoriteStatus.heightAnchor.constraint(equalToConstant: 20.0),
             favoriteStatus.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             title.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10.0),
             title.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             title.trailingAnchor.constraint(equalTo: contentView.centerXAnchor),
             title.heightAnchor.constraint(equalToConstant: 20.0),
-            amount.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10.0),
-            amount.leadingAnchor.constraint(equalTo: title.trailingAnchor, constant: 10.0),
-            amount.trailingAnchor.constraint(equalTo: favoriteStatus.leadingAnchor),
+            amount.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 10.0),
+            amount.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10.0),
+            amount.trailingAnchor.constraint(equalTo: contentView.centerXAnchor),
             amount.heightAnchor.constraint(equalToConstant: 20.0),
-            address.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 10.0),
+            address.topAnchor.constraint(equalTo: amount.bottomAnchor, constant: 10.0),
             address.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10.0),
             address.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             address.trailingAnchor.constraint(equalTo: favoriteStatus.leadingAnchor),
@@ -99,9 +99,9 @@ class ListViewCell: UITableViewCell {
     }
     
     func setContent(with station: ListViewViewModel.Station) {
-        title.text = station.name
-        amount.text = "\(station.emptySlot)"
-        address.text = station.address
+        title.text = "站名：\(station.name)"
+        amount.text = "\(station.emptySlot) 個空位/\(station.avaliableBikes) 台可使用"
+        address.text = "站點位置：\(station.address)"
         favoriteStatus.text = station.isFavorite ? "❤️" : "🤍"
     }
     
