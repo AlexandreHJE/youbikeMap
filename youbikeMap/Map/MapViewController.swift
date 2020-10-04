@@ -69,7 +69,7 @@ class MapViewController: UIViewController {
         let event = Observable<Void>.merge([
             Observable.just(Void()),
             Observable<Int>.timer(.seconds(0), period: .seconds(10), scheduler: MainScheduler.instance).flatMap({ _ in Observable.just(Void()) }),
-            button.rx.tap.asObservable(),
+            refreshButton.rx.tap.asObservable(),
         ])
         
         viewModel.fetchStations(event)

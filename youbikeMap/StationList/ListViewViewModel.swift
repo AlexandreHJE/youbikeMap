@@ -24,10 +24,25 @@ class ListViewViewModel {
         let area: String // -> sarea
     }
     
+//    let stations: BehaviorRelay<[YouBikeStation]> = .init(value: [])
     let stations: PublishRelay<[Station]> = .init() //Observabel, Subscriber
     
     private let bag = DisposeBag()
-    
+//
+//    func fetchStations(_ event: Observable<Void>) {
+//        event
+//        .flatMap { (_) -> Observable<[String: YouBikeStation]> in
+//            return DataManager.shared.getYoubikeData()
+//        }
+//        .map({ (stations) -> [YouBikeStation] in
+//            return stations.values.map({ $0 })
+//        })
+//        .subscribe(onNext: { (stations) in
+//
+//            self.stations.accept(stations)
+//        })
+//        .disposed(by: bag)
+//    }
     @objc
     func fetchStations() {
         Observable.combineLatest(
