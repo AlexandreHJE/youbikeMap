@@ -123,6 +123,7 @@ class MapViewController: UIViewController {
     open func focusOnSelectedStation(with coordinate: CLLocationCoordinate2D) {
         let coordinateRegion = MKCoordinateRegion(center: coordinate, latitudinalMeters: regionRad, longitudinalMeters: regionRad)
         stationMap.setRegion(coordinateRegion, animated: true)
+        
     }
     
     private func centerMapOnLocation(location: CLLocation) {
@@ -132,25 +133,30 @@ class MapViewController: UIViewController {
     }
 
     private func popMessage(_ station: YouBikeStation) {
+        
         let alertController = UIAlertController(title: "請選擇欲操作的行為", message: "站點：\(station.sna)", preferredStyle: .alert)
-    
-           var favoriteAction = "加入最愛"
-           
-           if let array = UserDefaults.standard.array(forKey: "favoriteIDs") as? [String] {
-               if Set([station.sno]).isSubset(of: Set(array)) {
-                   favoriteAction = "移除最愛"
-               }
-           }
-           
-           let addFavorite = UIAlertAction(title: favoriteAction, style: .default, handler: { _ in self.addToFavorite(station.sno)})
-           
-           let cancel = UIAlertAction(title: "取消", style: .cancel, handler: nil)
         
-           alertController.addAction(addFavorite)
-           alertController.addAction(cancel)
+        var favoriteAction = "加入最愛"
         
-           present(alertController, animated: true, completion: nil)
-       }
+        if let array = UserDefaults.standard.array(forKey: "favoriteIDs") as? [String] {
+            if Set([station.sno]).isSubset(of: Set(array)) {
+                favoriteAction = "移除最愛"
+            }
+        }
+        
+        let addFavorite = UIAlertAction(title: favoriteAction, style: .default, handler: { _ in self.addToFavorite(station.sno)})
+        
+        
+        
+//        let navigation = UIAlertAction(title: "導航", style: .default, handler: { _ in self.startNavigation(CLLocationCoordinate2D(latitude: Double(station.lat) ?? 0.0, longitude: Double(station.lng) ?? 0.0))})
+        let cancel = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+        
+        alertController.addAction(addFavorite)
+//        alertController.addAction(navigation)
+        alertController.addAction(cancel)
+        
+        present(alertController, animated: true, completion: nil)
+    }
     
     func addToFavorite(_ stationID: String) {
         if var array = UserDefaults.standard.array(forKey: "favoriteIDs") as? [String] {
@@ -165,6 +171,19 @@ class MapViewController: UIViewController {
         } else {
            UserDefaults.standard.set([stationID], forKey: "favoriteIDs")
         }
+    }
+    
+    func startNavigation(_ destination: CLLocationCoordinate2D) {
+        let userLocation = CLLocationCoordinate2D(latitude: locationManager.location?.coordinate.latitude ?? 0.0, longitude: locationManager.location?.coordinate.longitude ?? 0.0)
+        let placeStart = MKPlacemark(coordinate: userLocation)
+        let placeEnd = MKPlacemark(coordinate: destination)
+        
+        let mapItemStart = MKMapItem(placemark: placeStart)
+        let mapItemEnd = MKMapItem(placemark: placeEnd)
+        let route = [mapItemStart, mapItemEnd]
+        let option = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeTransit]
+        
+        
     }
     
 }

@@ -35,5 +35,6 @@ extension TabBarController: ListViewControllerDelegate {
         selectedViewController = secondViewController
         let coordinate = CLLocationCoordinate2D(latitude: station.latitude, longitude: station.longitude)
         secondViewController.focusOnSelectedStation(with: coordinate)
+        
     }
 }
