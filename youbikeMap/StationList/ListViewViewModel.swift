@@ -78,37 +78,43 @@ class ListViewViewModel {
         
     }
     
-    @objc
-    func fetchStations() {
+    
+    func fetchStations(_ event: Observable<Void>, keywordEvent: Observable<String?>) {
         Observable.combineLatest(
-                UserDefaults.standard.rx.observe([String].self, "favoriteIDs"),
-                Observable<Int>.timer(.seconds(0), period: .seconds(5), scheduler: MainScheduler.instance)
-                    .flatMap { (_) -> Observable<[String: YouBikeStation]> in
-                        return DataManager.shared.getYoubikeData()
+            UserDefaults.standard.rx.observe([String].self, "favoriteIDs"),
+            event.flatMap { (_) -> Observable<[String: YouBikeStation]> in
+                return DataManager.shared.getYoubikeData()
+            },
+            keywordEvent
+        )
+            .map({ (IDs, stations, keyword) -> ([String]?, [YouBikeStation], String?) in
+                var temps = [YouBikeStation]()
+                for k in stations.keys {
+                    temps.append(stations[k]!)
                 }
-            )
-                .map({ (IDs, stations) -> ([String]?, [YouBikeStation]) in
-                    var temps = [YouBikeStation]()
-                    for k in stations.keys {
-                        temps.append(stations[k]!)
-                    }
-                    temps.sort { (lhs, rhs) -> Bool in
-                        return lhs.sno > rhs.sno
-                    }
-                    return (IDs, temps)
-                })
-                .map({ (IDs, stations) -> [Station] in
-                    return stations.map {
-                        var new = $0.toStation()
-                        new.isFavorite = (IDs ?? []).contains(new.ID)
-                        return new
-                    }
-                })
-                .subscribe(onNext: { (stations) in
-                    self.stations.accept(stations)
-                })
-                .disposed(by: bag)
-        }
+                temps.sort { (lhs, rhs) -> Bool in
+                    return lhs.sno > rhs.sno
+                }
+                return (IDs, temps, keyword)
+            })
+            .map({ (IDs, stations, keyword) -> [Station] in
+                let newStations: [Station] = stations.map {
+                    var new = $0.toStation()
+                    new.isFavorite = (IDs ?? []).contains(new.ID)
+                    return new
+                }
+                guard let keyword = keyword else { return newStations }
+                if keyword.isEmpty { return newStations }
+                return newStations.filter { (station) -> Bool in
+                    return keyword.contains(station.area)
+                }
+            })
+            .subscribe(onNext: { stations in
+                print(stations.first)
+                self.stations.accept(stations)
+            })
+            .disposed(by: bag)
+    }
 }
 
 extension YouBikeStation {

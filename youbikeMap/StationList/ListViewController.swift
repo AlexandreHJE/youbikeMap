@@ -12,7 +12,7 @@ import RxSwift
 import RxCocoa
 
 class ListViewController: UIViewController {
-
+    
     let districtList = [
         "一般",
         "最愛",
@@ -41,18 +41,28 @@ class ListViewController: UIViewController {
     lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.translatesAutoresizingMaskIntoConstraints = false
-        searchBar.delegate = self
+        //        searchBar.delegate = self
+        searchBar.searchTextField.inputView = self.picker
         
+        //TODO: 讓 keyboard 隱藏
+        let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 0, height: 44.0)) //原本想用 .zero 但這樣似乎會無法顯示，只好給個預設高度 44.0
+        toolbar.setItems([doneButtonItem], animated: false)
+        searchBar.searchTextField.inputAccessoryView = toolbar
         return searchBar
+    }()
+    
+    lazy var doneButtonItem: UIBarButtonItem = {
+        let item = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(hide))
+        return item
     }()
     
     lazy var picker: UIPickerView = {
         let picker = UIPickerView()
-        picker.isHidden = true
-        picker.translatesAutoresizingMaskIntoConstraints = false
+        //        picker.isHidden = true
+        //        picker.translatesAutoresizingMaskIntoConstraints = false
         picker.delegate = self
         picker.dataSource = self
-        picker.backgroundColor = .gray
+        //        picker.backgroundColor = .gray
         
         return picker
     }()
@@ -72,26 +82,33 @@ class ListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        
         loadViews()
         bindTableView()
         let event = Observable<Void>.merge([
             Observable.just(Void()),
             Observable<Int>.timer(.seconds(0), period: .seconds(10), scheduler: MainScheduler.instance).flatMap({ _ in Observable.just(Void()) }),
             refreshButton.rx.tap.asObservable(),
-            UserDefaults.standard.rx.observe([String].self, "favoriteIDs").flatMap({ _ in Observable.just(Void()) })
         ])
         
-        viewModel.fetchStations()
-//        viewModel.fetchStations(event)
-                
-    }
+        //naming 有問題
+        let keywordEvent =
+            Observable<String?>.merge([
+                Observable.just(nil),
+                doneButtonItem.rx.tap.flatMap({
+                    return self.searchBar.rx.text.distinctUntilChanged().asObservable()
+                })
+            ])
+        viewModel.fetchStations(event,
+                                keywordEvent: keywordEvent)
         
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
-            super.viewWillAppear(animated)
+        super.viewWillAppear(animated)
         
     }
-        
+    
     private func bindTableView() {
         viewModel.stations
             .bind(to: tableView.rx.items(cellIdentifier: reuseID, cellType: ListViewCell.self)) { (row, element, cell) in
@@ -99,13 +116,13 @@ class ListViewController: UIViewController {
         }
         .disposed(by: disposeBag)
         
-        searchBar.rx.text
-            .orEmpty
-            .distinctUntilChanged()
-            .subscribe(onNext: { (text) in
-                print("searchBar.rx.text.onNext: \(String(describing: text))")
-            })
-            .disposed(by: self.disposeBag)
+        //        searchBar.rx.text
+        //            .orEmpty
+        //            .distinctUntilChanged()
+        //            .subscribe(onNext: { (text) in
+        //                print("searchBar.rx.text.onNext: \(String(describing: text))")
+        //            })
+        //            .disposed(by: self.disposeBag)
         
         searchBar.rx.searchButtonClicked
             .subscribe(onNext: {() in
@@ -123,11 +140,11 @@ class ListViewController: UIViewController {
         
         
     }
-        
+    
     private func loadViews() {
         view.addSubview(searchBar)
         view.addSubview(tableView)
-        view.addSubview(picker)
+        //        view.addSubview(picker)
         view.addSubview(refreshButton)
         NSLayoutConstraint.activate([
             refreshButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -141,10 +158,10 @@ class ListViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            picker.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -100),
-            picker.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            picker.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            picker.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            //            picker.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -100),
+            //            picker.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            //            picker.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            //            picker.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
         ])
     }
     
@@ -169,7 +186,7 @@ class ListViewController: UIViewController {
         alertController.addAction(seeMap)
         present(alertController, animated: true, completion: nil)
     }
- 
+    
     func addToFavorite(_ stationID: String) {
         if var array = UserDefaults.standard.array(forKey: "favoriteIDs") as? [String] {
             var favSet = Set(array)
@@ -185,22 +202,25 @@ class ListViewController: UIViewController {
         }
     }
     
-    
+    @objc
+    func hide() {
+        picker.isHidden = true
+    }
     
 }
 
-extension ListViewController: UISearchBarDelegate {
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        print("aaa")
-        picker.isHidden = false
-        
-    }
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        print("Search Icon tapped")
-        picker.isHidden = !picker.isHidden
-    }
-    
-}
+//extension ListViewController: UISearchBarDelegate {
+//    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+//        print("aaa")
+//        picker.isHidden = false
+//
+//    }
+//    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+//        print("Search Icon tapped")
+//        picker.isHidden = !picker.isHidden
+//    }
+//
+//}
 
 extension ListViewController: UIPickerViewDelegate {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -223,7 +243,7 @@ extension ListViewController: UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-//        searchBar.text = ""
+        //        searchBar.text = ""
         searchBar.searchTextField.text = districtList[row]
     }
 }
