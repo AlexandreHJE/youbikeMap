@@ -98,19 +98,11 @@ class ListViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func setContent(with station: YouBikeStation) {
-        
-        var isFavorited = "🤍"
-        title.text = station.sna
-        amount.text = station.bemp
-        address.text = station.ar
-        if let array = UserDefaults.standard.array(forKey: "favoriteIDs") as? [String] {
-            if Set([station.sno]).isSubset(of: Set(array)) {
-                isFavorited = "❤️"
-            }
-        }
-        favoriteStatus.text = isFavorited
-
+    func setContent(with station: ListViewViewModel.Station) {
+        title.text = station.name
+        amount.text = "\(station.emptySlot)"
+        address.text = station.address
+        favoriteStatus.text = station.isFavorite ? "❤️" : "🤍"
     }
     
 }

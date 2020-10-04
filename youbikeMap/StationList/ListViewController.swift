@@ -57,9 +57,9 @@ class ListViewController: UIViewController {
         .disposed(by: disposeBag)
         
         tableView.rx
-            .modelSelected(YouBikeStation.self)
+            .modelSelected(ListViewViewModel.Station.self)
             .subscribe(onNext: {
-                print("tap index: \($0.sno)")
+                print("tap index: \($0.ID)")
                 self.popMessage($0)
             })
             .disposed(by: disposeBag)
@@ -75,19 +75,19 @@ class ListViewController: UIViewController {
         ])
     }
     
-    private func popMessage(_ station: YouBikeStation) {
-        let alertController = UIAlertController(title: "請選擇欲操作的行為", message: "站點：\(station.sna)", preferredStyle: .alert)
+    private func popMessage(_ station: ListViewViewModel.Station) {
+        let alertController = UIAlertController(title: "請選擇欲操作的行為", message: "站點：\(station.name)", preferredStyle: .alert)
         
         
         var favoriteAction = "加入最愛"
         
         if let array = UserDefaults.standard.array(forKey: "favoriteIDs") as? [String] {
-            if Set([station.sno]).isSubset(of: Set(array)) {
+            if Set([station.ID]).isSubset(of: Set(array)) {
                 favoriteAction = "移除最愛"
             }
         }
         
-        let addFavorite = UIAlertAction(title: favoriteAction, style: .default, handler: { _ in self.addToFavorite(station.sno)})
+        let addFavorite = UIAlertAction(title: favoriteAction, style: .default, handler: { _ in self.addToFavorite(station.ID)})
         
         let cancel = UIAlertAction(title: "取消", style: .cancel, handler: nil)
         let seeMap = UIAlertAction(title: "前往地圖看位置", style: .default, handler: nil)

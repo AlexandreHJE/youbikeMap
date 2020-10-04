@@ -50,6 +50,14 @@ class MapViewController: UIViewController {
         return map
     }()
     
+    let button = UIButton(type: .close)
+    lazy var refreshButton: UIButton = {
+        let button = UIButton(type: .detailDisclosure)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        
+        return button
+    }()
+    
     let regionRad: CLLocationDistance = 1000
     
     override func viewDidLoad() {
@@ -58,7 +66,13 @@ class MapViewController: UIViewController {
         setUIComponents()
         //set initial location in Taipei 101
         let initialLocation = CLLocation(latitude: 25.0339639, longitude: 121.5622835)
-        viewModel.fetchStations()
+        let event = Observable<Void>.merge([
+            Observable.just(Void()),
+            Observable<Int>.timer(.seconds(0), period: .seconds(10), scheduler: MainScheduler.instance).flatMap({ _ in Observable.just(Void()) }),
+            button.rx.tap.asObservable(),
+        ])
+        
+        viewModel.fetchStations(event)
         stationMap.delegate = self
         centerMapOnLocation(location: initialLocation)
         makePins()
@@ -67,6 +81,10 @@ class MapViewController: UIViewController {
     private func makePins(){
         viewModel.stations
             .asDriver(onErrorJustReturn: [])
+            .do(onNext: { (stations) in
+                print(stations.first)
+            })
+            .map({ $0.map({ $0.toAnnotation() }) })
             .drive(stationMap.rx.annotations)
             .disposed(by: disposeBag)
 
@@ -82,6 +100,7 @@ class MapViewController: UIViewController {
         
         view.addSubview(searchBar)
         view.addSubview(stationMap)
+        view.addSubview(refreshButton)
         
         NSLayoutConstraint.activate([
             searchBar.topAnchor.constraint(equalTo: view.topAnchor),
@@ -91,6 +110,8 @@ class MapViewController: UIViewController {
             stationMap.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             stationMap.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             stationMap.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            refreshButton.trailingAnchor.constraint(equalTo: stationMap.trailingAnchor),
+            refreshButton.topAnchor.constraint(equalTo: stationMap.topAnchor),
         ])
     }
     
@@ -101,7 +122,7 @@ class MapViewController: UIViewController {
     }
 
     private func popMessage(_ station: YouBikeStation) {
-           let alertController = UIAlertController(title: "請選擇欲操作的行為", message: "站點：\(station.sna)", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "請選擇欲操作的行為", message: "站點：\(station.sna)", preferredStyle: .alert)
            
            
            var favoriteAction = "加入最愛"
@@ -122,20 +143,20 @@ class MapViewController: UIViewController {
            present(alertController, animated: true, completion: nil)
        }
     
-       func addToFavorite(_ stationID: String) {
-           if var array = UserDefaults.standard.array(forKey: "favoriteIDs") as? [String] {
-               var favSet = Set(array)
-               if Set([stationID]).isSubset(of: favSet) {
-                   favSet.remove(stationID)
-                   array = Array(favSet)
-               } else {
-                   array.append(stationID)
-               }
-               UserDefaults.standard.set(array, forKey: "favoriteIDs")
+    func addToFavorite(_ stationID: String) {
+        if var array = UserDefaults.standard.array(forKey: "favoriteIDs") as? [String] {
+           var favSet = Set(array)
+           if Set([stationID]).isSubset(of: favSet) {
+               favSet.remove(stationID)
+               array = Array(favSet)
            } else {
-               UserDefaults.standard.set([stationID], forKey: "favoriteIDs")
+               array.append(stationID)
            }
-       }
+           UserDefaults.standard.set(array, forKey: "favoriteIDs")
+        } else {
+           UserDefaults.standard.set([stationID], forKey: "favoriteIDs")
+        }
+    }
     
 }
 
@@ -161,20 +182,34 @@ extension MapViewController: MKMapViewDelegate {
             subtitleLabel.numberOfLines = 0
             annotationView?.detailCalloutAccessoryView = subtitleLabel
             annotationView?.calloutOffset = CGPoint(x: -5, y: 5)
-        
-            
-            let rightButton = UIButton(type: .detailDisclosure)
-            rightButton.addTarget(self, action: #selector(didClickDetailDisclosure(_:)), for: .touchUpInside)
-            
-            annotationView?.rightCalloutAccessoryView = rightButton
+            annotationView?.rightCalloutAccessoryView = UIButton(type: .infoLight)
         }
 
         return annotationView
     }
     
-    @objc
-    func didClickDetailDisclosure(_ button: UIButton) {
-//        popMessage(button.superview?.value(forKey: "stationID") as! YouBikeStation)
-//        print(button.superview?.value(forKey: "stationID") as! YouBikeStation)
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        guard
+            let coordinate = view.annotation?.coordinate,
+            let station = viewModel.station(with: coordinate) else { return }
+        
+        popMessage(station)
+    }
+}
+
+
+fileprivate extension YouBikeStation {
+
+    func toAnnotation() -> MKAnnotation {
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = CLLocationCoordinate2D(latitude: Double(lat) ?? 0.0, longitude: Double(lng) ?? 0.0)
+        
+        annotation.title = "站名：\(sna)"
+        annotation.subtitle = """
+                            目前腳踏車數量：\(sbi)
+                            剩餘車位數量：\(bemp)
+                            最後更新時間：\(mday)
+                            """
+        return annotation
     }
 }

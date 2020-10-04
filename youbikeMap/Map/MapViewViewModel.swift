@@ -7,35 +7,64 @@
 //
 
 import Foundation
+import CoreLocation
 import MapKit
 import RxRelay
 import RxSwift
 
 class MapViewViewModel {
     
-    let stations: PublishRelay<[MKAnnotation]> = .init()
+    struct Station {
+        let ID: String
+        let coordinate: CLLocationCoordinate2D
+        var isFavorite: Bool = false
+        let name: String // -> sna
+        let address: String // -> ar
+        let emptySlot: Int // -> bemp
+        let area: String // -> sarea
+    }
+    
+    let stations: BehaviorRelay<[YouBikeStation]> = .init(value: [])
     //Observabel, Subscriber
     
     private let bag = DisposeBag()
     
-    @objc
-    func fetchStations() {
-        Observable<Int>
-            .timer(.seconds(0), period: .seconds(5), scheduler: MainScheduler.instance)
-            .flatMap { (_) -> Observable<[String: YouBikeStation]> in
-                return DataManager.shared.getYoubikeData()
+    func fetchStations(_ event: Observable<Void>) {
+        event
+        .flatMap { (_) -> Observable<[String: YouBikeStation]> in
+            return DataManager.shared.getYoubikeData()
         }
-        .map({ (stations) -> [MKAnnotation] in
-            var temps = [MKAnnotation]()
-            for k in stations.keys {
-                temps.append((stations[k]?.setStationAnnotation())!)
-                
-            }
-            return temps
+        .map({ (stations) -> [YouBikeStation] in
+            return stations.values.map({ $0 })
         })
-            .subscribe(onNext: { (stations) in
-                self.stations.accept(stations)
-            })
-            .disposed(by: bag)
+        .subscribe(onNext: { (stations) in
+            self.stations.accept(stations)
+        })
+        .disposed(by: bag)
+    }
+    
+    func station(with coordinate: CLLocationCoordinate2D) -> YouBikeStation? {
+    //        return stations
+    //            .value
+    //            .filter { (station) -> Bool in
+    //                let stationCoordinate = CLLocationCoordinate2D(latitude: Double(lat) ?? 0.0,
+    //                                                               longitude: Double(lng) ?? 0.0)
+    //                return stationCoordinate == coordinate
+    //        }
+    //        .first
+        return stations.value.first { (station) -> Bool in
+            let stationCoordinate = CLLocationCoordinate2D(latitude: Double(station.lat) ?? 0.0,
+                                                           longitude: Double(station.lng) ?? 0.0)
+            return stationCoordinate == coordinate
+                
+        }
+    }
+}
+
+extension CLLocationCoordinate2D: Equatable {
+
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        return lhs.latitude == rhs.latitude &&
+            lhs.longitude == rhs.longitude
     }
 }

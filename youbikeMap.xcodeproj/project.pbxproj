@@ -19,7 +19,6 @@
 		A2CE30EB252592F700B364B1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A2CE30E9252592F700B364B1 /* LaunchScreen.storyboard */; };
 		A2CE30F4252598D600B364B1 /* YoubikeDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CE30F3252598D600B364B1 /* YoubikeDataManager.swift */; };
 		A2CE30F725259A1900B364B1 /* StationsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CE30F625259A1900B364B1 /* StationsModel.swift */; };
-		A2CE30F925259E3000B364B1 /* MyFavoriteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CE30F825259E3000B364B1 /* MyFavoriteModel.swift */; };
 		A2CE30FF2525E3EE00B364B1 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CE30FE2525E3EE00B364B1 /* ListViewController.swift */; };
 		A2CE31012525E53800B364B1 /* ListViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CE31002525E53800B364B1 /* ListViewViewModel.swift */; };
 		A2CE31032525EA3B00B364B1 /* ListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CE31022525EA3B00B364B1 /* ListViewCell.swift */; };
@@ -42,7 +41,6 @@
 		A2CE30EC252592F700B364B1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A2CE30F3252598D600B364B1 /* YoubikeDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoubikeDataManager.swift; sourceTree = "<group>"; };
 		A2CE30F625259A1900B364B1 /* StationsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationsModel.swift; sourceTree = "<group>"; };
-		A2CE30F825259E3000B364B1 /* MyFavoriteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFavoriteModel.swift; sourceTree = "<group>"; };
 		A2CE30FE2525E3EE00B364B1 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		A2CE31002525E53800B364B1 /* ListViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewViewModel.swift; sourceTree = "<group>"; };
 		A2CE31022525EA3B00B364B1 /* ListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewCell.swift; sourceTree = "<group>"; };
@@ -134,7 +132,6 @@
 			isa = PBXGroup;
 			children = (
 				A2CE30F625259A1900B364B1 /* StationsModel.swift */,
-				A2CE30F825259E3000B364B1 /* MyFavoriteModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -275,7 +272,6 @@
 			files = (
 				A274F4CB2527056D00D895CC /* MapViewController.swift in Sources */,
 				A2CE30F4252598D600B364B1 /* YoubikeDataManager.swift in Sources */,
-				A2CE30F925259E3000B364B1 /* MyFavoriteModel.swift in Sources */,
 				A2CE30E3252592F200B364B1 /* ViewController.swift in Sources */,
 				A2CE30FF2525E3EE00B364B1 /* ListViewController.swift in Sources */,
 				A274F4F925280F9D00D895CC /* MapPinAnnotationView.swift in Sources */,
