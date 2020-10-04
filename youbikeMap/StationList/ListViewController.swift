@@ -11,8 +11,15 @@ import MapKit
 import RxSwift
 import RxCocoa
 
+
+protocol ListViewControllerDelegate: class {
+    func didSelectStation(_ station: ListViewViewModel.Station)
+}
+
 class ListViewController: UIViewController {
     
+    
+    weak var delegate: ListViewControllerDelegate?
     let districtList = [
         "一般",
         "最愛",
@@ -41,28 +48,24 @@ class ListViewController: UIViewController {
     lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.translatesAutoresizingMaskIntoConstraints = false
-        //        searchBar.delegate = self
         searchBar.searchTextField.inputView = self.picker
         
-        //TODO: 讓 keyboard 隱藏
-        let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 0, height: 44.0)) //原本想用 .zero 但這樣似乎會無法顯示，只好給個預設高度 44.0
+        let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 0, height: 44.0))
         toolbar.setItems([doneButtonItem], animated: false)
         searchBar.searchTextField.inputAccessoryView = toolbar
         return searchBar
     }()
     
     lazy var doneButtonItem: UIBarButtonItem = {
-        let item = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(hide))
+        let item = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: nil)
+        //selector 會被 rx 攔截
         return item
     }()
     
     lazy var picker: UIPickerView = {
         let picker = UIPickerView()
-        //        picker.isHidden = true
-        //        picker.translatesAutoresizingMaskIntoConstraints = false
         picker.delegate = self
         picker.dataSource = self
-        //        picker.backgroundColor = .gray
         
         return picker
     }()
@@ -92,7 +95,7 @@ class ListViewController: UIViewController {
         ])
         
         //naming 有問題
-        let keywordEvent =
+        let keywordSelectedEvent =
             Observable<String?>.merge([
                 Observable.just(nil),
                 doneButtonItem.rx.tap.flatMap({
@@ -100,7 +103,12 @@ class ListViewController: UIViewController {
                 })
             ])
         viewModel.fetchStations(event,
-                                keywordEvent: keywordEvent)
+                                keywordEvent: keywordSelectedEvent)
+        
+        doneButtonItem.rx.tap
+            .subscribe(onNext: { [weak self] _ in
+                self?.hide()
+            }).disposed(by: disposeBag)
         
     }
     
@@ -116,20 +124,6 @@ class ListViewController: UIViewController {
         }
         .disposed(by: disposeBag)
         
-        //        searchBar.rx.text
-        //            .orEmpty
-        //            .distinctUntilChanged()
-        //            .subscribe(onNext: { (text) in
-        //                print("searchBar.rx.text.onNext: \(String(describing: text))")
-        //            })
-        //            .disposed(by: self.disposeBag)
-        
-        searchBar.rx.searchButtonClicked
-            .subscribe(onNext: {() in
-                print("searchBar.rx.searchButtonClicked.onNext: text: \(String(describing: self.searchBar.text))")
-            })
-            .disposed(by: self.disposeBag)
-        
         tableView.rx
             .modelSelected(ListViewViewModel.Station.self)
             .subscribe(onNext: {
@@ -144,7 +138,6 @@ class ListViewController: UIViewController {
     private func loadViews() {
         view.addSubview(searchBar)
         view.addSubview(tableView)
-        //        view.addSubview(picker)
         view.addSubview(refreshButton)
         NSLayoutConstraint.activate([
             refreshButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -158,10 +151,6 @@ class ListViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            //            picker.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -100),
-            //            picker.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            //            picker.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            //            picker.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
         ])
     }
     
@@ -180,7 +169,9 @@ class ListViewController: UIViewController {
         let addFavorite = UIAlertAction(title: favoriteAction, style: .default, handler: { _ in self.addToFavorite(station.ID)})
         
         let cancel = UIAlertAction(title: "取消", style: .cancel, handler: nil)
-        let seeMap = UIAlertAction(title: "前往地圖查看位置", style: .default, handler: nil)
+        let seeMap = UIAlertAction(title: "前往地圖查看位置", style: .default, handler: { [weak self] _ in
+            self?.delegate?.didSelectStation(station)
+        })
         alertController.addAction(addFavorite)
         alertController.addAction(cancel)
         alertController.addAction(seeMap)
@@ -204,23 +195,10 @@ class ListViewController: UIViewController {
     
     @objc
     func hide() {
-        picker.isHidden = true
+        searchBar.endEditing(true)
     }
     
 }
-
-//extension ListViewController: UISearchBarDelegate {
-//    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-//        print("aaa")
-//        picker.isHidden = false
-//
-//    }
-//    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-//        print("Search Icon tapped")
-//        picker.isHidden = !picker.isHidden
-//    }
-//
-//}
 
 extension ListViewController: UIPickerViewDelegate {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -231,6 +209,7 @@ extension ListViewController: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return districtList[row]
     }
+    
 }
 
 extension ListViewController: UIPickerViewDataSource {
@@ -243,7 +222,6 @@ extension ListViewController: UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        //        searchBar.text = ""
         searchBar.searchTextField.text = districtList[row]
     }
 }

@@ -18,7 +18,6 @@ class MapViewController: UIViewController {
     var youBikeData = [String: YouBikeStation]()
     var filteredData = [String: YouBikeStation]()
     private let viewModel = MapViewViewModel()
-//    private let viewModel = ListViewViewModel()
     private let disposeBag: DisposeBag = .init()
     
     let districtList = [
@@ -81,22 +80,14 @@ class MapViewController: UIViewController {
     private func makePins(){
         viewModel.stations
             .asDriver(onErrorJustReturn: [])
-            .do(onNext: { (stations) in
-                print(stations.first)
-            })
             .map({ $0.map({ $0.toAnnotation() }) })
             .drive(stationMap.rx.annotations)
             .disposed(by: disposeBag)
 
         stationMap.rx.willStartLoadingMap
             .asDriver()
-            .drive(onNext: {
-            print("map started loading")
-            })
+            .drive(onNext: { print("map started loading") })
             .disposed(by: disposeBag)
-        
-        
-        
     }
     
     private func setUIComponents() {
@@ -118,6 +109,11 @@ class MapViewController: UIViewController {
         ])
     }
     
+    open func focusOnSelectedStation(with coordinate: CLLocationCoordinate2D) {
+        let coordinateRegion = MKCoordinateRegion(center: coordinate, latitudinalMeters: regionRad, longitudinalMeters: regionRad)
+        stationMap.setRegion(coordinateRegion, animated: true)
+    }
+    
     private func centerMapOnLocation(location: CLLocation) {
         let coordinateRegion = MKCoordinateRegion(center: location.coordinate,
                                                   latitudinalMeters: regionRad, longitudinalMeters: regionRad)
@@ -126,8 +122,7 @@ class MapViewController: UIViewController {
 
     private func popMessage(_ station: YouBikeStation) {
         let alertController = UIAlertController(title: "請選擇欲操作的行為", message: "站點：\(station.sna)", preferredStyle: .alert)
-           
-           
+    
            var favoriteAction = "加入最愛"
            
            if let array = UserDefaults.standard.array(forKey: "favoriteIDs") as? [String] {
