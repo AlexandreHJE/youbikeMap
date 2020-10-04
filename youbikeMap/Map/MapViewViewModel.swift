@@ -44,14 +44,7 @@ class MapViewViewModel {
     }
     
     func station(with coordinate: CLLocationCoordinate2D) -> YouBikeStation? {
-    //        return stations
-    //            .value
-    //            .filter { (station) -> Bool in
-    //                let stationCoordinate = CLLocationCoordinate2D(latitude: Double(lat) ?? 0.0,
-    //                                                               longitude: Double(lng) ?? 0.0)
-    //                return stationCoordinate == coordinate
-    //        }
-    //        .first
+
         return stations.value.first { (station) -> Bool in
             let stationCoordinate = CLLocationCoordinate2D(latitude: Double(station.lat) ?? 0.0,
                                                            longitude: Double(station.lng) ?? 0.0)
