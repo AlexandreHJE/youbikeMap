@@ -3,31 +3,49 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		4411715C659AC5C6D3A6D12E /* Pods_youbikeMap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 224CEB23124825B2B56527D5 /* Pods_youbikeMap.framework */; };
+		A274F4CB2527056D00D895CC /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A274F4CA2527056D00D895CC /* MapViewController.swift */; };
+		A274F4F3252772CD00D895CC /* MapViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A274F4F2252772CD00D895CC /* MapViewViewModel.swift */; };
+		A274F4F925280F9D00D895CC /* MapPinAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A274F4F825280F9D00D895CC /* MapPinAnnotationView.swift */; };
+		A274F4FE2529E73B00D895CC /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A274F4FD2529E73B00D895CC /* TabBarController.swift */; };
+		A274F5002529E9AB00D895CC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A274F4FF2529E9AB00D895CC /* Main.storyboard */; };
 		A2CE30DF252592F200B364B1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CE30DE252592F200B364B1 /* AppDelegate.swift */; };
 		A2CE30E1252592F200B364B1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CE30E0252592F200B364B1 /* SceneDelegate.swift */; };
 		A2CE30E3252592F200B364B1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CE30E2252592F200B364B1 /* ViewController.swift */; };
-		A2CE30E6252592F200B364B1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A2CE30E4252592F200B364B1 /* Main.storyboard */; };
 		A2CE30E8252592F700B364B1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2CE30E7252592F700B364B1 /* Assets.xcassets */; };
 		A2CE30EB252592F700B364B1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A2CE30E9252592F700B364B1 /* LaunchScreen.storyboard */; };
+		A2CE30F4252598D600B364B1 /* YoubikeDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CE30F3252598D600B364B1 /* YoubikeDataManager.swift */; };
+		A2CE30F725259A1900B364B1 /* StationsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CE30F625259A1900B364B1 /* StationsModel.swift */; };
+		A2CE30FF2525E3EE00B364B1 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CE30FE2525E3EE00B364B1 /* ListViewController.swift */; };
+		A2CE31012525E53800B364B1 /* ListViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CE31002525E53800B364B1 /* ListViewViewModel.swift */; };
+		A2CE31032525EA3B00B364B1 /* ListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CE31022525EA3B00B364B1 /* ListViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		224CEB23124825B2B56527D5 /* Pods_youbikeMap.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_youbikeMap.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C8F9AA4EEFE8180E5183CD8 /* Pods-youbikeMap.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-youbikeMap.debug.xcconfig"; path = "Target Support Files/Pods-youbikeMap/Pods-youbikeMap.debug.xcconfig"; sourceTree = "<group>"; };
 		5E02C9535DD8A69F800FAF18 /* Pods-youbikeMap.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-youbikeMap.release.xcconfig"; path = "Target Support Files/Pods-youbikeMap/Pods-youbikeMap.release.xcconfig"; sourceTree = "<group>"; };
+		A274F4CA2527056D00D895CC /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		A274F4F2252772CD00D895CC /* MapViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewViewModel.swift; sourceTree = "<group>"; };
+		A274F4F825280F9D00D895CC /* MapPinAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPinAnnotationView.swift; sourceTree = "<group>"; };
+		A274F4FD2529E73B00D895CC /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		A274F4FF2529E9AB00D895CC /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		A2CE30DB252592F200B364B1 /* youbikeMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = youbikeMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2CE30DE252592F200B364B1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A2CE30E0252592F200B364B1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		A2CE30E2252592F200B364B1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		A2CE30E5252592F200B364B1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A2CE30E7252592F700B364B1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A2CE30EA252592F700B364B1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A2CE30EC252592F700B364B1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A2CE30F3252598D600B364B1 /* YoubikeDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoubikeDataManager.swift; sourceTree = "<group>"; };
+		A2CE30F625259A1900B364B1 /* StationsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationsModel.swift; sourceTree = "<group>"; };
+		A2CE30FE2525E3EE00B364B1 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
+		A2CE31002525E53800B364B1 /* ListViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewViewModel.swift; sourceTree = "<group>"; };
+		A2CE31022525EA3B00B364B1 /* ListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,6 +66,24 @@
 				224CEB23124825B2B56527D5 /* Pods_youbikeMap.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A274F4A02526DD1F00D895CC /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				A274F4FD2529E73B00D895CC /* TabBarController.swift */,
+			);
+			path = TabBar;
+			sourceTree = "<group>";
+		};
+		A274F4C92527052F00D895CC /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				A274F4CA2527056D00D895CC /* MapViewController.swift */,
+				A274F4F825280F9D00D895CC /* MapPinAnnotationView.swift */,
+				A274F4F2252772CD00D895CC /* MapViewViewModel.swift */,
+			);
+			path = Map;
 			sourceTree = "<group>";
 		};
 		A2CE30D2252592F200B364B1 = {
@@ -71,15 +107,46 @@
 		A2CE30DD252592F200B364B1 /* youbikeMap */ = {
 			isa = PBXGroup;
 			children = (
+				A2CE30F2252598A100B364B1 /* Managers */,
+				A2CE30F5252599F100B364B1 /* Models */,
+				A2CE30FD2525E35F00B364B1 /* StationList */,
+				A274F4A02526DD1F00D895CC /* TabBar */,
+				A274F4C92527052F00D895CC /* Map */,
 				A2CE30DE252592F200B364B1 /* AppDelegate.swift */,
 				A2CE30E0252592F200B364B1 /* SceneDelegate.swift */,
 				A2CE30E2252592F200B364B1 /* ViewController.swift */,
-				A2CE30E4252592F200B364B1 /* Main.storyboard */,
+				A274F4FF2529E9AB00D895CC /* Main.storyboard */,
 				A2CE30E7252592F700B364B1 /* Assets.xcassets */,
 				A2CE30E9252592F700B364B1 /* LaunchScreen.storyboard */,
 				A2CE30EC252592F700B364B1 /* Info.plist */,
 			);
 			path = youbikeMap;
+			sourceTree = "<group>";
+		};
+		A2CE30F2252598A100B364B1 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				A2CE30F3252598D600B364B1 /* YoubikeDataManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		A2CE30F5252599F100B364B1 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A2CE30F625259A1900B364B1 /* StationsModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		A2CE30FD2525E35F00B364B1 /* StationList */ = {
+			isa = PBXGroup;
+			children = (
+				A2CE30FE2525E3EE00B364B1 /* ListViewController.swift */,
+				A2CE31022525EA3B00B364B1 /* ListViewCell.swift */,
+				A2CE31002525E53800B364B1 /* ListViewViewModel.swift */,
+			);
+			path = StationList;
 			sourceTree = "<group>";
 		};
 		E3C592E718186031ED9729D1 /* Pods */ = {
@@ -88,7 +155,6 @@
 				3C8F9AA4EEFE8180E5183CD8 /* Pods-youbikeMap.debug.xcconfig */,
 				5E02C9535DD8A69F800FAF18 /* Pods-youbikeMap.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -152,9 +218,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A274F5002529E9AB00D895CC /* Main.storyboard in Resources */,
 				A2CE30EB252592F700B364B1 /* LaunchScreen.storyboard in Resources */,
 				A2CE30E8252592F700B364B1 /* Assets.xcassets in Resources */,
-				A2CE30E6252592F200B364B1 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -207,8 +273,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A274F4CB2527056D00D895CC /* MapViewController.swift in Sources */,
+				A2CE30F4252598D600B364B1 /* YoubikeDataManager.swift in Sources */,
 				A2CE30E3252592F200B364B1 /* ViewController.swift in Sources */,
+				A2CE30FF2525E3EE00B364B1 /* ListViewController.swift in Sources */,
+				A274F4F925280F9D00D895CC /* MapPinAnnotationView.swift in Sources */,
+				A274F4F3252772CD00D895CC /* MapViewViewModel.swift in Sources */,
 				A2CE30DF252592F200B364B1 /* AppDelegate.swift in Sources */,
+				A2CE31012525E53800B364B1 /* ListViewViewModel.swift in Sources */,
+				A2CE30F725259A1900B364B1 /* StationsModel.swift in Sources */,
+				A274F4FE2529E73B00D895CC /* TabBarController.swift in Sources */,
+				A2CE31032525EA3B00B364B1 /* ListViewCell.swift in Sources */,
 				A2CE30E1252592F200B364B1 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -216,14 +291,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		A2CE30E4252592F200B364B1 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				A2CE30E5252592F200B364B1 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		A2CE30E9252592F700B364B1 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -354,7 +421,9 @@
 			baseConfigurationReference = 3C8F9AA4EEFE8180E5183CD8 /* Pods-youbikeMap.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = V5F69NZBZU;
 				INFOPLIST_FILE = youbikeMap/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -362,6 +431,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = AlexHJE.youbikeMap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -372,7 +442,9 @@
 			baseConfigurationReference = 5E02C9535DD8A69F800FAF18 /* Pods-youbikeMap.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = V5F69NZBZU;
 				INFOPLIST_FILE = youbikeMap/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -380,6 +452,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = AlexHJE.youbikeMap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
