@@ -43,6 +43,41 @@ class ListViewViewModel {
 //        })
 //        .disposed(by: bag)
 //    }
+    
+    func fs(_ event: Observable<Void>) {
+        Observable.combineLatest(
+            UserDefaults.standard.rx.observe([String].self, "favoriteIDs"),
+            Observable<Int>.timer(.seconds(0), period: .seconds(5), scheduler: MainScheduler.instance)
+                .flatMap { (_) -> Observable<[String: YouBikeStation]> in
+                    return DataManager.shared.getYoubikeData()
+            }, event.flatMap({ _ in
+                return DataManager.shared.getYoubikeData()
+            })
+        )
+        .map({ (IDs, stations, refresh) -> ([String]?, [YouBikeStation]) in
+            var temps = [YouBikeStation]()
+            for k in stations.keys {
+                temps.append(stations[k]!)
+            }
+            temps.sort { (lhs, rhs) -> Bool in
+                return lhs.sno > rhs.sno
+            }
+            return (IDs, temps)
+        })
+        .map({ (IDs, stations) -> [Station] in
+            return stations.map {
+                var new = $0.toStation()
+                new.isFavorite = (IDs ?? []).contains(new.ID)
+                return new
+            }
+        })
+        .subscribe(onNext: { (stations) in
+            self.stations.accept(stations)
+        })
+        .disposed(by: bag)
+        
+    }
+    
     @objc
     func fetchStations() {
         Observable.combineLatest(
