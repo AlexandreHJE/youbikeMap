@@ -13,10 +13,7 @@ import RxMKMapView
 
 class MapViewController: UIViewController {
 
-    var annotations = [MKPointAnnotation]()
-    var selectedAnnotation: MKAnnotation?
-    var youBikeData = [String: YouBikeStation]()
-    var filteredData = [String: YouBikeStation]()
+    private let locationManager = CLLocationManager()
     private let viewModel = MapViewViewModel()
     private let disposeBag: DisposeBag = .init()
     
@@ -35,12 +32,12 @@ class MapViewController: UIViewController {
         "文山區"
     ]
     
-    lazy var searchBar: UISearchBar = {
-        let searchBar = UISearchBar()
-        searchBar.translatesAutoresizingMaskIntoConstraints = false
-        
-        return searchBar
-    }()
+//    lazy var searchBar: UISearchBar = {
+//        let searchBar = UISearchBar()
+//        searchBar.translatesAutoresizingMaskIntoConstraints = false
+//
+//        return searchBar
+//    }()
     
     lazy var stationMap: MKMapView = {
         let map = MKMapView()
@@ -63,8 +60,26 @@ class MapViewController: UIViewController {
         super.viewDidLoad()
         
         setUIComponents()
-        //set initial location in Taipei 101
-        let initialLocation = CLLocation(latitude: 25.0339639, longitude: 121.5622835)
+        
+        // Ask for Authorisation from the User.
+        self.locationManager.requestAlwaysAuthorization()
+
+        // For use in foreground
+        self.locationManager.requestWhenInUseAuthorization()
+
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager.startUpdatingLocation()
+        }
+        #if targetEnvironment(simulator)
+          //set initial location in Taipei 101
+          let initialLocation = CLLocation(latitude: 25.0339639, longitude: 121.5622835)
+        #else
+          //之後改用來自手機設備上 GPS 的位置
+        let initialLocation = CLLocation(latitude: locationManager.location?.coordinate.latitude, longitude: locationManager.location?.coordinate.longitude)
+        #endif
+        
         let event = Observable<Void>.merge([
             Observable.just(Void()),
             Observable<Int>.timer(.seconds(0), period: .seconds(10), scheduler: MainScheduler.instance).flatMap({ _ in Observable.just(Void()) }),
@@ -92,15 +107,11 @@ class MapViewController: UIViewController {
     
     private func setUIComponents() {
         
-        view.addSubview(searchBar)
         view.addSubview(stationMap)
         view.addSubview(refreshButton)
         
         NSLayoutConstraint.activate([
-            searchBar.safeAreaLayoutGuide.topAnchor.constraint(equalTo: view.topAnchor),
-            searchBar.safeAreaLayoutGuide.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            searchBar.safeAreaLayoutGuide.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            stationMap.topAnchor.constraint(equalTo: searchBar.bottomAnchor),
+            stationMap.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             stationMap.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             stationMap.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             stationMap.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -207,6 +218,12 @@ extension MapViewController: MKMapViewDelegate {
     
 }
 
+extension MapViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
+        print("locations = \(locValue.latitude) \(locValue.longitude)")
+    }
+}
 
 fileprivate extension YouBikeStation {
 

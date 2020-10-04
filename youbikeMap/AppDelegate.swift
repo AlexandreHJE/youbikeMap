@@ -7,15 +7,18 @@
 //
 
 import UIKit
-import RxSwift
+import CoreLocation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    let locationManager = CLLocationManager()
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
 //        UserDefaults.standard.set([String](), forKey: "favoriteIDs")
         
+        locationManager.requestWhenInUseAuthorization()
         
         return true
     }
