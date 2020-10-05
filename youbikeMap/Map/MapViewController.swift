@@ -32,13 +32,6 @@ class MapViewController: UIViewController {
         "文山區"
     ]
     
-//    lazy var searchBar: UISearchBar = {
-//        let searchBar = UISearchBar()
-//        searchBar.translatesAutoresizingMaskIntoConstraints = false
-//
-//        return searchBar
-//    }()
-    
     lazy var stationMap: MKMapView = {
         let map = MKMapView()
         map.translatesAutoresizingMaskIntoConstraints = false

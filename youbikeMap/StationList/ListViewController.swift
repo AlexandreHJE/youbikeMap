@@ -73,6 +73,7 @@ class ListViewController: UIViewController {
     lazy var refreshButton: UIButton = {
         let button = UIButton(type: .custom)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = .white
         
         if let image = UIImage(named: "refresh.png") {
             button.setImage(image, for: .normal)
@@ -127,7 +128,6 @@ class ListViewController: UIViewController {
         tableView.rx
             .modelSelected(ListViewViewModel.Station.self)
             .subscribe(onNext: {
-                print("tap index: \($0.ID)")
                 self.popMessage($0)
             })
             .disposed(by: disposeBag)
@@ -136,17 +136,19 @@ class ListViewController: UIViewController {
     }
     
     private func loadViews() {
+        view.backgroundColor = .white
         view.addSubview(searchBar)
         view.addSubview(tableView)
         view.addSubview(refreshButton)
         NSLayoutConstraint.activate([
-            refreshButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            refreshButton.widthAnchor.constraint(equalToConstant: view.frame.width/5.0),
-            refreshButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            refreshButton.widthAnchor.constraint(equalToConstant: 22.0),
+            refreshButton.heightAnchor.constraint(equalToConstant: 22.0),
+            refreshButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10.0),
             searchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             searchBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             searchBar.trailingAnchor.constraint(equalTo: refreshButton.safeAreaLayoutGuide.leadingAnchor),
-            refreshButton.bottomAnchor.constraint(equalTo: searchBar.safeAreaLayoutGuide.bottomAnchor),
+            refreshButton.centerYAnchor.constraint(equalTo: searchBar.safeAreaLayoutGuide.centerYAnchor),
+//            refreshButton.bottomAnchor.constraint(equalTo: searchBar.safeAreaLayoutGuide.bottomAnchor),
             tableView.topAnchor.constraint(equalTo: searchBar.safeAreaLayoutGuide.bottomAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
