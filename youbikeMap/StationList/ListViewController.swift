@@ -91,7 +91,7 @@ class ListViewController: UIViewController {
         bindTableView()
         let event = Observable<Void>.merge([
             Observable.just(Void()),
-            Observable<Int>.timer(.seconds(0), period: .seconds(10), scheduler: MainScheduler.instance).flatMap({ _ in Observable.just(Void()) }),
+            Observable<Int>.timer(.seconds(10), period: .seconds(10), scheduler: MainScheduler.instance).flatMap({ _ in Observable.just(Void()) }),
             refreshButton.rx.tap.asObservable(),
         ])
         
@@ -100,7 +100,7 @@ class ListViewController: UIViewController {
             Observable<String?>.merge([
                 Observable.just(nil),
                 doneButtonItem.rx.tap.flatMap({
-                    return self.searchBar.rx.text.distinctUntilChanged().asObservable()
+                    return self.searchBar.rx.text.distinctUntilChanged().single()
                 })
             ])
         viewModel.fetchStations(event,
