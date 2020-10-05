@@ -13,7 +13,7 @@ class DataManager {
     static let shared = DataManager()
 }
 
-
+//TODO: Change Observable to Maybe or Just(?) 
 extension DataManager {
     func getYoubikeData() -> Observable<[String: YouBikeStation]> {
         return Observable.create { observer in
