@@ -15,7 +15,6 @@
 		A274F5002529E9AB00D895CC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A274F4FF2529E9AB00D895CC /* Main.storyboard */; };
 		A2CE30DF252592F200B364B1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CE30DE252592F200B364B1 /* AppDelegate.swift */; };
 		A2CE30E1252592F200B364B1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CE30E0252592F200B364B1 /* SceneDelegate.swift */; };
-		A2CE30E3252592F200B364B1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CE30E2252592F200B364B1 /* ViewController.swift */; };
 		A2CE30E8252592F700B364B1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2CE30E7252592F700B364B1 /* Assets.xcassets */; };
 		A2CE30EB252592F700B364B1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A2CE30E9252592F700B364B1 /* LaunchScreen.storyboard */; };
 		A2CE30F4252598D600B364B1 /* YoubikeDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2CE30F3252598D600B364B1 /* YoubikeDataManager.swift */; };
@@ -37,7 +36,6 @@
 		A2CE30DB252592F200B364B1 /* youbikeMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = youbikeMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2CE30DE252592F200B364B1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A2CE30E0252592F200B364B1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		A2CE30E2252592F200B364B1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		A2CE30E7252592F700B364B1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A2CE30EA252592F700B364B1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A2CE30EC252592F700B364B1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -114,7 +112,6 @@
 				A274F4C92527052F00D895CC /* Map */,
 				A2CE30DE252592F200B364B1 /* AppDelegate.swift */,
 				A2CE30E0252592F200B364B1 /* SceneDelegate.swift */,
-				A2CE30E2252592F200B364B1 /* ViewController.swift */,
 				A274F4FF2529E9AB00D895CC /* Main.storyboard */,
 				A2CE30E7252592F700B364B1 /* Assets.xcassets */,
 				A2CE30E9252592F700B364B1 /* LaunchScreen.storyboard */,
@@ -275,7 +272,6 @@
 			files = (
 				A274F4CB2527056D00D895CC /* MapViewController.swift in Sources */,
 				A2CE30F4252598D600B364B1 /* YoubikeDataManager.swift in Sources */,
-				A2CE30E3252592F200B364B1 /* ViewController.swift in Sources */,
 				A2CE30FF2525E3EE00B364B1 /* ListViewController.swift in Sources */,
 				A274F4F925280F9D00D895CC /* MapPinAnnotationView.swift in Sources */,
 				A274F4F3252772CD00D895CC /* MapViewViewModel.swift in Sources */,

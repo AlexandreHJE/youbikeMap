@@ -10,6 +10,7 @@ import UIKit
 import MapKit
 import RxSwift
 import RxMKMapView
+import CoreLocation
 
 class MapViewController: UIViewController {
 
@@ -55,22 +56,24 @@ class MapViewController: UIViewController {
         setUIComponents()
         
         // Ask for Authorisation from the User.
-        self.locationManager.requestAlwaysAuthorization()
+        locationManager.requestAlwaysAuthorization()
 
         // For use in foreground
-        self.locationManager.requestWhenInUseAuthorization()
+        locationManager.requestWhenInUseAuthorization()
 
         if CLLocationManager.locationServicesEnabled() {
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             locationManager.startUpdatingLocation()
         }
+        
+        var initialLocation = CLLocation(latitude: 25.0339639, longitude: 121.5622835)
+        
         #if targetEnvironment(simulator)
           //set initial location in Taipei 101
-          let initialLocation = CLLocation(latitude: 25.0339639, longitude: 121.5622835)
+        initialLocation = CLLocation(latitude: 25.0339639, longitude: 121.5622835)
         #else
-          //之後改用來自手機設備上 GPS 的位置
-        let initialLocation = CLLocation(latitude: locationManager.location?.coordinate.latitude, longitude: locationManager.location?.coordinate.longitude)
+          
         #endif
         
         let event = Observable<Void>.merge([

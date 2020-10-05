@@ -73,7 +73,7 @@ class ListViewController: UIViewController {
     lazy var refreshButton: UIButton = {
         let button = UIButton(type: .custom)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = .white
+//        button.backgroundColor = .white
         
         if let image = UIImage(named: "refresh.png") {
             button.setImage(image, for: .normal)
@@ -136,7 +136,7 @@ class ListViewController: UIViewController {
     }
     
     private func loadViews() {
-        view.backgroundColor = .white
+//        view.backgroundColor = .white
         view.addSubview(searchBar)
         view.addSubview(tableView)
         view.addSubview(refreshButton)
